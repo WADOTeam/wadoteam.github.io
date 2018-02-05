@@ -84,7 +84,26 @@ demo = {
         );
     },
     initDashboardPage: function () {
+        var tabs = {
+            "plugin": {icon: "extension", name: "Plugin"},
+            "language": {icon: "language", name: "Language"}
+        }
 
+        var navList = $("#nav-tabs-list");
+        var tabTitleTemplate = "<li>\n" +
+            "<a href=\"#<<id\" data-toggle=\"tab\">\n" +
+            "<i class=\"material-icons\"><<icon</i> <<title\n" +
+            "<div class=\"ripple-container\"></div>\n" +
+            "</a>\n" +
+            "</li>";
+        for (var t in tabs) {
+            navList.append(tabTitleTemplate
+                .replace("<<id", t)
+                .replace("<<icon", tabs[t]['icon'])
+                .replace("<<title", tabs[t]["name"]));
+        }
+
+        $("#" + Object.keys(tabs)[0]).parent().addClass("active");
     }
 
-}
+};
