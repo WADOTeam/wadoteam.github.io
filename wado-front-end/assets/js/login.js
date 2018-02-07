@@ -4,6 +4,7 @@ $('.message a').click(function(){
 
 $("#login").click( function()
     {
-        // window.location.replace("../../examples/dashboard.html");
+        console.log("a");
+        window.location = "http://127.0.0.1/index/dashboard.html";
     }
 );

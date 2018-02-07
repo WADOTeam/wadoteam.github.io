@@ -104,6 +104,31 @@ demo = {
         }
 
         $("#" + Object.keys(tabs)[0]).parent().addClass("active");
+
+        $("#suggestion-table .text-danger").click(function (target) {
+            var repo = $("#suggestion-table tr td:nth-child(2)");
+            window.location.href="http://127.0.0.1/index/provenance.html?giturl=" + repo.text();
+        })
+    },
+    initProvenance: function () {
+
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var repo = url.searchParams.get("giturl");
+        $.ajax({
+            url: "http://localhost:8080/wado/repositories/provenance?repo=" + repo,
+            type: 'GET',
+            contentType: 'application/html',
+            success: function(res) {
+                res = res.replace("btn btn-default btn-sm", "disable-button");
+                $("#provenance-wrapper").append(res);
+                $(".loader").addClass("disable-button");
+
+            },
+            error: function (err) {
+                console.log("error");
+            }
+        });
     }
 
 };
