@@ -1,10 +1,8 @@
-$('.message a').click(function(){
-    $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
-});
+$('.message a').click(function () {
+  $('form').animate({height: 'toggle', opacity: 'toggle'}, 'slow')
+})
 
-$("#login").click( function()
-    {
-        console.log("a");
-        window.location = "../../dashboard.html";
-    }
-);
+$('#login').click(function () {
+    window.location = '/dashboard.html'
+  }
+)
