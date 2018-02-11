@@ -4,12 +4,14 @@
 <head>
     <meta charset="utf-8"/>
     <title>Projects</title>
+
+    <!--<base href="http://localhost:63343/web_app_front_end/">-->
     <!-- Bootstrap core CSS     -->
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
     <!--  Material Dashboard CSS    -->
-    <link href="/assets/css/material-dashboard.css?v=1.2.0" rel="stylesheet"/>
+    <link href="assets/css/material-dashboard.css?v=1.2.0" rel="stylesheet"/>
     <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="/assets/css/demo.css" rel="stylesheet"/>
+    <link href="assets/css/demo.css" rel="stylesheet"/>
     <!--     Fonts and icons     -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='//fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet'
@@ -52,11 +54,23 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
-                            <div class="card-header" data-background-color="green">
-                                <h4 class="title">Projects</h4>
-                                <p class="category">What project do you develop today? </p>
+                            <div class="card-header card-header-icon" data-background-color="green">
+                                <i class="material-icons">assignment</i>
                             </div>
                             <div class="card-content table-responsive">
+                                <h4 class="card-title">Projects</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a href="github.html" class="btn btn-social btn-fill btn-github">
+                                            <i class="fa fa-github"></i> Import from Github
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                        <a href="form.html" class="btn btn-danger">
+                                            <i class="material-icons">note add</i> Add Project
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </div>
+                                </div>
                                 <table class="table">
                                     <thead class="text-success">
                                     <th>Project</th>
@@ -93,10 +107,10 @@
 <script src="assets/js/demo.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+  $(document).ready(function () {
 
-        demo.initProjectPage();
+    demo.initProjectPage()
 
-    });
+  })
 </script>
 </html>
