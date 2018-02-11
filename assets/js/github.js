@@ -2,7 +2,7 @@
   hello.init({
     github: 'ac472ac90516733d44d8'
   }, {
-    redirect_uri: '../redirect.html'
+    redirect_uri: './redirect.html'
   })
 
   var online = function (session) {
@@ -61,22 +61,27 @@
         var dataSet = []
         $.each(r.data, function (key, item) {
           console.log(item)
-          dataSet.push([item.full_name, item.language])
+          dataSet.push({
+            full_name: item.full_name,
+            language: item.language,
+            id: item.id
+          })
         })
 
         $('#repositories').DataTable({
           data: dataSet,
-          'ordering': false,
-          'searching': false,
-          'pagingType': 'full_numbers',
+          ordering: false,
+          searching: false,
+          pagingType: 'full_numbers',
           responsive: true,
+          rowId: 'id',
           columns: [
-            {title: 'Name'},
-            {title: 'Language'},
+            {title: 'Name', data: 'full_name'},
+            {title: 'Language', data: 'language'},
             {
               data: null,
               className: 'center',
-              defaultContent: '<a href="#" class="import_one_repo">Import</a>'
+              defaultContent: '<a href="#" class="import_one_repo btn btn-primary btn-simple">Import</a>'
             }
           ]
         })
