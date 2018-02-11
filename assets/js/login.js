@@ -2,7 +2,8 @@ $('.message a').click(function () {
   $('form').animate({height: 'toggle', opacity: 'toggle'}, 'slow')
 })
 
-$('#login').click(function () {
+$(body).on('click', '#login', function (e) {
+    e.preventDefault()
     window.location = '/dashboard.html'
   }
 )
