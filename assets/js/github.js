@@ -47,6 +47,12 @@
     }
   }
 
+  $('#repositories').on('click', 'a.import_one_repo', function (e) {
+    e.preventDefault()
+
+    console.log($(this).closest('tr'))
+  })
+
   window.userRepos = function () {
     var github = hello('github')
 
@@ -62,11 +68,16 @@
           data: dataSet,
           'ordering': false,
           'searching': false,
-          "pagingType": "full_numbers",
+          'pagingType': 'full_numbers',
           responsive: true,
           columns: [
             {title: 'Name'},
-            {title: 'Language'}
+            {title: 'Language'},
+            {
+              data: null,
+              className: 'center',
+              defaultContent: '<a href="#" class="import_one_repo">Import</a>'
+            }
           ]
         })
       })
