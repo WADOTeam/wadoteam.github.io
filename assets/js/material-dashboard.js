@@ -14,7 +14,7 @@
 
  */
 
-(function() {
+(function () {
     isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
     if (isWindows) {
@@ -47,7 +47,7 @@ var seq2 = 0,
     durations2 = 500;
 
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     $sidebar = $('.sidebar');
 
@@ -64,36 +64,36 @@ $(document).ready(function() {
     //  Activate the tooltips
     $('[rel="tooltip"]').tooltip();
 
-    $('.form-control').on("focus", function() {
+    $('.form-control').on("focus", function () {
         $(this).parent('.input-group').addClass("input-group-focus");
-    }).on("blur", function() {
+    }).on("blur", function () {
         $(this).parent(".input-group").removeClass("input-group-focus");
     });
 
 });
 
-$(document).on('click', '.navbar-toggle', function() {
+$(document).on('click', '.navbar-toggle', function () {
     $toggle = $(this);
 
     if (mobile_menu_visible == 1) {
         $('html').removeClass('nav-open');
 
         $('.close-layer').remove();
-        setTimeout(function() {
+        setTimeout(function () {
             $toggle.removeClass('toggled');
         }, 400);
 
         mobile_menu_visible = 0;
     } else {
-        setTimeout(function() {
+        setTimeout(function () {
             $toggle.addClass('toggled');
         }, 430);
 
         div = '<div id="bodyClick"></div>';
-        $(div).appendTo('body').click(function() {
+        $(div).appendTo('body').click(function () {
             $('html').removeClass('nav-open');
             mobile_menu_visible = 0;
-            setTimeout(function() {
+            setTimeout(function () {
                 $toggle.removeClass('toggled');
                 $('#bodyClick').remove();
             }, 550);
@@ -106,7 +106,7 @@ $(document).on('click', '.navbar-toggle', function() {
 });
 
 // activate collapse right menu when the windows is resized
-$(window).resize(function() {
+$(window).resize(function () {
     md.initSidebarsCheck();
     // reset the seq for charts drawing animations
     seq = seq2 = 0;
@@ -119,7 +119,7 @@ md = {
         disabled_collapse_init: 0,
     },
 
-    checkSidebarImage: function() {
+    checkSidebarImage: function () {
         $sidebar = $('.sidebar');
         image_src = $sidebar.data('image');
 
@@ -129,7 +129,7 @@ md = {
         }
     },
 
-    checkScrollForTransparentNavbar: debounce(function() {
+    checkScrollForTransparentNavbar: debounce(function () {
         if ($(document).scrollTop() > 260) {
             if (transparent) {
                 transparent = false;
@@ -143,7 +143,7 @@ md = {
         }
     }, 17),
 
-    initSidebarsCheck: function() {
+    initSidebarsCheck: function () {
         if ($(window).width() <= 991) {
             if ($sidebar.length != 0) {
                 md.initRightMenu();
@@ -151,7 +151,7 @@ md = {
         }
     },
 
-    initRightMenu: debounce(function() {
+    initRightMenu: debounce(function () {
         $sidebar_wrapper = $('.sidebar-wrapper');
 
         if (!mobile_menu_initialized) {
@@ -173,7 +173,7 @@ md = {
             $nav_content.insertBefore($sidebar_nav);
             $navbar_form.insertBefore($nav_content);
 
-            $(".sidebar-wrapper .dropdown .dropdown-menu > li > a").click(function(event) {
+            $(".sidebar-wrapper .dropdown .dropdown-menu > li > a").click(function (event) {
                 event.stopPropagation();
 
             });
@@ -194,29 +194,41 @@ md = {
     }, 200),
 
 
-    initDropDown: debounce(function() {
+    initDropDown: debounce(function () {
         $sidebar_wrapper = $('.sidebar-wrapper');
 
-            $(".dropdown-menu-custom > li > a").click(function(event) {
-                var inputElements = $(".dropdown-menu-custom").siblings('input');
-                if(inputElements.length > 0) {
-                    var inputElement = inputElements[0];
-                    $(inputElement).val(event.currentTarget.innerText);
-                    $(".dropdown-menu-custom").parent().removeClass("is-empty");
+        $(".dropdown-menu-custom > li > a").click(function (event) {
+            var inputElements = $(".dropdown-menu-custom").siblings('input');
+            if (inputElements.length > 0) {
+                var inputElement = inputElements[0];
+                
+                if ($(inputElement).val().indexOf(' '+event.currentTarget.innerText+' ') === -1) {
+                    if ($(inputElement).val()) {
+                        $(inputElement).val($(inputElement).val() +' '+event.currentTarget.innerText+' ');
+                    } else {
+                        $(inputElement).val(' '+event.currentTarget.innerText+' ');
+                    }
+                    $(event.target.parentNode).addClass("active");
+                } else {
+                    $(event.target.parentNode).removeClass("active");
+                    $(inputElement).val($(inputElement).val().replace(' '+event.currentTarget.innerText+' ',''));
                 }
 
-            });
+                $(".dropdown-menu-custom").parent().removeClass("is-empty");
+            }
 
-            // simulate resize so all the charts/maps will be redrawn
-            window.dispatchEvent(new Event('resize'));
+        });
 
-            mobile_menu_initialized = true;
+        // simulate resize so all the charts/maps will be redrawn
+        window.dispatchEvent(new Event('resize'));
+
+        mobile_menu_initialized = true;
     }, 200),
 
 
-    startAnimationForLineChart: function(chart) {
+    startAnimationForLineChart: function (chart) {
 
-        chart.on('draw', function(data) {
+        chart.on('draw', function (data) {
             if (data.type === 'line' || data.type === 'area') {
                 data.element.animate({
                     d: {
@@ -243,9 +255,9 @@ md = {
 
         seq = 0;
     },
-    startAnimationForBarChart: function(chart) {
+    startAnimationForBarChart: function (chart) {
 
-        chart.on('draw', function(data) {
+        chart.on('draw', function (data) {
             if (data.type === 'bar') {
                 seq2++;
                 data.element.animate({
@@ -272,11 +284,11 @@ md = {
 
 function debounce(func, wait, immediate) {
     var timeout;
-    return function() {
+    return function () {
         var context = this,
             args = arguments;
         clearTimeout(timeout);
-        timeout = setTimeout(function() {
+        timeout = setTimeout(function () {
             timeout = null;
             if (!immediate) func.apply(context, args);
         }, wait);

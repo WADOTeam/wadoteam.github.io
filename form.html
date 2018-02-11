@@ -6,6 +6,8 @@
     <title>WADO</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <!-- Bootstrap core CSS     -->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
     <!--  Material Dashboard CSS    -->
@@ -33,16 +35,16 @@
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li class="active">
-                        <a href="./user.html">
-                            <i class="material-icons">person</i>
-                            <p>User Profile</p>
-                        </a>
-                    </li>
                     <li>
                         <a href="table.html">
                             <i class="material-icons">content_paste</i>
                             <p>Projects</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="recomandation.html">
+                            <i class="material-icons">find_in_page</i>
+                            <p>Recomandations</p>
                         </a>
                     </li>
                 </ul>
@@ -64,56 +66,41 @@
                                             <div class="col-md-4">
                                                 <div class="form-group form-info label-floating">
                                                     <label class="control-label">Project name</label>
-                                                    <input type="text" class="form-control">
+                                                    <input name="name" type="text" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="form-group form-info label-floating">
                                                     <label class="control-label">Description</label>
-                                                    <input type="text" class="form-control">
+                                                    <input name="description" type="text" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row title-row">
-                                            <span class="title-edit">Front end</span>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group form-info label-floating">
-                                                    <label class="control-label">Main Language</label>
-
-                                                        <input class="form-control dropdown-toggle" data-toggle="dropdown"/>
-                                                        <ul class="dropdown-menu-custom dropdown-menu text-info">
-                                                            <li>
-                                                                <a href="#">Pyton</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">JAVA</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">PHP</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">other</a>
-                                                            </li>
-                                                        </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group form-info label-floating">
-                                                    <label class="control-label">Main framework</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row title-row">
-                                            <span class="title-edit">Back end</span>
+                                            <span class="title-edit">Languages</span>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group form-info label-floating">
-                                                    <label class="control-label">Language</label>
-                                                    <input type="text" class="form-control">
+                                                    <label class="control-label">Languages</label>
+                                                    <select multiple name="languages" id="languagesList" class="form-control dropdown-toggle">
+                                                        <option value="AL">Alabama</option>
+                                                        <option value="WY">Wyoming</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row title-row">
+                                            <span class="title-edit">Frameworks</span>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group form-info label-floating">
+                                                    <label class="control-label">Frameworks</label>
+                                                    <select multiple name="frameworks" id="frameworksList" class="form-control dropdown-toggle">
+                                                        <option value="AL">Alabama</option>
+                                                        <option value="WY">Wyoming</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -124,19 +111,29 @@
                                             <div class="col-md-4">
                                                 <div class="form-group form-info label-floating">
                                                     <label class="control-label">Operating system</label>
-                                                    <input type="text" class="form-control">
+                                                    <select name="operatingSystem" id="operatingSystemsList" class="form-control dropdown-toggle">
+                                                        <option></option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group form-info label-floating">
                                                     <label class="control-label">Server</label>
-                                                    <input type="text" class="form-control">
+                                                    <select name="server" id="serversList" class="form-control dropdown-toggle">
+                                                        <option></option>
+                                                        <option value="AL">Alabama</option>
+                                                        <option value="WY">Wyoming</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group form-info label-floating">
                                                     <label class="control-label">Compiler</label>
-                                                    <input type="text" class="form-control">
+                                                    <select name="compiler" id="compilersList" class="form-control dropdown-toggle">
+                                                        <option></option>
+                                                        <option value="AL">Alabama</option>
+                                                        <option value="WY">Wyoming</option>
+                                                    </select>
                                                 </div>
                                             </div>
 
@@ -145,16 +142,14 @@
                                             <span class="title-edit">Database</span>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group form-info">
-                                                    <label>Name</label>
-                                                    <input class="form-control" rows="5"/>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group form-info">
-                                                    <label>alte info</label>
-                                                    <input class="form-control" rows="5"/>
+                                            <div class="col-md-12">
+                                                <div class="form-group form-info label-floating">
+                                                    <label class="control-label">Database</label>
+                                                    <select name="database" id="databasesList" class="form-control dropdown-toggle">
+                                                        <option></option>
+                                                        <option value="AL">Alabama</option>
+                                                        <option value="WY">Wyoming</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -163,15 +158,23 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-group form-info">
-                                                    <label>Name</label>
-                                                        <input name="ideName" class="form-control" rows="5"/>
+                                                <div class="form-group form-info label-floating">
+                                                    <label class="control-label">IDE</label>
+                                                    <select name="ide" id="idesList" class="form-control dropdown-toggle">
+                                                        <option></option>
+                                                        <option value="AL">Alabama</option>
+                                                        <option value="WY">Wyoming</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="form-group form-info">
-                                                    <label>Plugins</label>
-                                                        <input name ="plugins" class="form-control" rows="5"/>
+                                                <div class="form-group form-info label-floating">
+                                                    <label class="control-label">Plugins</label>
+                                                    <select name="plugin" id="pluginsList" class="form-control dropdown-toggle">
+                                                        <option></option>
+                                                        <option value="AL">Alabama</option>
+                                                        <option value="WY">Wyoming</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -182,18 +185,18 @@
                             </div>
                         </div>
                         <!--<div class="col-md-4">-->
-                            <!--<div class="card card-profile">-->
-                                <!--<div class="card-avatar">-->
-                                    <!--<a href="#pablo">-->
-                                        <!--<img class="img" src="../assets/img/faces/icon.png" />-->
-                                    <!--</a>-->
-                                <!--</div>-->
-                                <!--<div class="content">-->
-                                    <!--<p class="card-content">-->
-                                        <!--The information you gave will help us to give more info about what is new in your development interests.-->
-                                    <!--</p>-->
-                                <!--</div>-->
-                            <!--</div>-->
+                        <!--<div class="card card-profile">-->
+                        <!--<div class="card-avatar">-->
+                        <!--<a href="#pablo">-->
+                        <!--<img class="img" src="../assets/img/faces/icon.png" />-->
+                        <!--</a>-->
+                        <!--</div>-->
+                        <!--<div class="content">-->
+                        <!--<p class="card-content">-->
+                        <!--The information you gave will help us to give more info about what is new in your development interests.-->
+                        <!--</p>-->
+                        <!--</div>-->
+                        <!--</div>-->
                         <!--</div>-->
                     </div>
                 </div>
@@ -217,11 +220,12 @@
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="assets/js/demo.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
-
         demo.initUserPage();
-
     });
 </script>
+
 </html>

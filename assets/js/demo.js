@@ -42,17 +42,17 @@ demo = {
             message: "Welcome to <b>Material Dashboard</b> - a beautiful freebie for every web developer."
 
         }, {
-            type: type[color],
-            timer: 4000,
-            placement: {
-                from: from,
-                align: align
-            }
-        });
+                type: type[color],
+                timer: 4000,
+                placement: {
+                    from: from,
+                    align: align
+                }
+            });
     },
 
     initProjectPage: function () {
-        var projects = [{name: "proiect", description: "descriere"}, {name: "proiect", description: "descriere"}];
+        var projects = [{ name: "proiect", description: "descriere" }, { name: "proiect", description: "descriere" }];
         var templateRow = "<tr>\n" +
             "<td><<name</td>\n" +
             "<td><<desc</td>\n" +
@@ -65,43 +65,71 @@ demo = {
 
     initUserPage: function () {
 
-        var dataFromApi = {plugins: "sdf"};
-        for (var i in dataFromApi) {
-            $("input[name=" + i + "]").val(dataFromApi[i]);
-        }
+        $("#languagesList").select2();
+        $("#frameworksList").select2();
+
+        $.ajax({
+            url: "https://restcountries.eu/rest/v2/all"
+        }).then(function (response) {
+            $("#operatingSystemsList").select2({
+                allowClear: true,
+                placeholder: "Select an operating system",
+                data: $.map(response, function (item) {
+                    return {
+                        text: item.name,
+                        id: item.name
+                    }
+                })
+            });
+        });
+
+        $("#serversList").select2({
+            allowClear: true,
+            placeholder: "Select a server"
+        });
+        $("#compilersList").select2({
+            allowClear: true,
+            placeholder: "Select a compiler"
+        });
+        $("#databasesList").select2({
+            allowClear: true,
+            placeholder: "Select a database"
+        });
+        $("#idesList").select2({
+            allowClear: true,
+            placeholder: "Select an ide"
+        });
+        $("#pluginsList").select2({
+            allowClear: true,
+            placeholder: "Select a plugin"
+        });
+
+        // var dataFromApi = {plugins: "sdf"};
+        // for (var i in dataFromApi) {
+        //     $("input[name=" + i + "]").val(dataFromApi[i]);
+        // }
 
         $("#user-data-submit").click(function () {
-                var userInfo = {};
-                var inputs = $("#user-data input");
-                for (var i = 0; i < inputs.length; i++) {
-                    if ($(inputs[i]).attr("name") != undefined && $(inputs[i]).val().length > 1) {
-                        userInfo[$(inputs[i]).attr("name")] = $(inputs[i]).val();
-                    }
-
+            var userInfo = {};
+            var inputs = $("#user-data input");
+            for (var i = 0; i < inputs.length; i++) {
+                if ($(inputs[i]).attr("name") != undefined && $(inputs[i]).val().length > 1) {
+                    userInfo[$(inputs[i]).attr("name")] = $(inputs[i]).val();
                 }
-                console.log(userInfo);
+
             }
+            var inputs = $("#user-data select");
+            for (var i = 0; i < inputs.length; i++) {
+                if ($(inputs[i]).attr("name") != undefined && $(inputs[i]).val().length > 1) {
+                    userInfo[$(inputs[i]).attr("name")] = $(inputs[i]).val();
+                }
+
+            }
+            console.log(userInfo);
+        }
         );
     },
     initDashboardPage: function () {
-        var tabs = {
-            "plugin": {icon: "extension", name: "Plugin"},
-            "language": {icon: "language", name: "Language"}
-        }
-
-        var navList = $("#nav-tabs-list");
-        var tabTitleTemplate = "<li>\n" +
-            "<a href=\"#<<id\" data-toggle=\"tab\">\n" +
-            "<i class=\"material-icons\"><<icon</i> <<title\n" +
-            "<div class=\"ripple-container\"></div>\n" +
-            "</a>\n" +
-            "</li>";
-        for (var t in tabs) {
-            navList.append(tabTitleTemplate
-                .replace("<<id", t)
-                .replace("<<icon", tabs[t]['icon'])
-                .replace("<<title", tabs[t]["name"]));
-        }
 
         $("#" + Object.keys(tabs)[0]).parent().addClass("active");
 
@@ -118,7 +146,7 @@ demo = {
             url: "https://wado-project.herokuapp.com/repositories/provenance?repo=" + repo,
             type: 'GET',
             contentType: 'application/html',
-            success: function(res) {
+            success: function (res) {
                 res = res.replace("btn btn-default btn-sm", "disable-button");
                 $("#provenance-wrapper").append(res);
                 $(".loader").addClass("disable-button");
@@ -128,6 +156,94 @@ demo = {
                 console.log("error");
             }
         });
+    },
+
+    initRecomandationPage: function () {
+
+        var template = "<tr>\n" +
+            "<td>!name</td>\n" +
+            "<td>!desc</td>\n" +
+            "<td>!license</td>\n" +
+            "<td>!list</td>\n" +
+            "<td>!arr</td>\n" +
+            "</tr>";
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/wado/fgf/recomandation",
+            cache: false,
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $("#suggestion-table").append(
+                        template.replace("!name", data[i][0])
+                            .replace("!desc", data[i][1])
+                            .replace("!license", data[i][2])
+                            .replace("!list", getListOfRepo(data[i][3]))
+                            .replace("!arr", getListOfArrows(data[i][3])));
+                }
+            },
+            error: function (error) {
+                alert("Internal error");
+            }
+        });
+
+        $("#suggestion-table .text-danger").click(function (target) {
+            var repo = $("#suggestion-table tr td:nth-child(2)");
+            window.location.href = "/provenance.html?giturl=" + repo.text();
+        });
+
+        setArchitecturelRecomandation();
+
     }
 
+
+};
+
+var getListOfRepo = function (data) {
+    var template =
+        "<li>\n" +
+        "<a href=\"!n\">!r</a>\n" +
+        "</li>\n"
+    var list = "<ul>";
+    for (var i = 0; i < data.length; i++) {
+        list += template.replace("!n", data[i]).replace("!r", data[i]);
+    }
+    return list + "</ul>"
+
+}
+
+var getListOfArrows = function (data) {
+    var template =
+        "<li><a class=\"text-danger\" href=\"!#\"><i class=\"material-icons\">arrow_forward</i></a></li>";
+    var list = "<ul>";
+    for (var i = 0; i < data.length; i++) {
+        list += template.replace("!#", "/provenance.html?giturl=" + data[i]);
+    }
+    return list + "</ul>"
+
+};
+
+var setArchitecturelRecomandation = function(){
+    var template = "<tr>\n" +
+        "<td>!pattern</td>\n" +
+        "<td>!desc</td>\n" +
+        "</tr>";
+
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/wado/fgf/arhitecture_informations",
+        cache: false,
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                var name = Object.keys(data[i])[0];
+                var description = data[i][name];
+                $("#suggestion-table-arhitecture").append(
+                    template.replace("!pattern", name.replace(/_/g, " "))
+                        .replace("!desc", description).replace("@en", ""));
+            }
+        },
+        error: function (error) {
+            alert("Internal error");
+        }
+    });
 };
