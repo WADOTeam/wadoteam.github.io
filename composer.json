@@ -1,0 +1,10 @@
+{
+    "name": "wado/app",
+    "authors": [
+        {
+            "name": "Alexandru Furculita",
+            "email": "alex@furculita.net"
+        }
+    ],
+    "require": {}
+}
