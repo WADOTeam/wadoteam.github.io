@@ -107,16 +107,15 @@ demo = {
 
         $("#suggestion-table .text-danger").click(function (target) {
             var repo = $("#suggestion-table tr td:nth-child(2)");
-            window.location.href="http://127.0.0.1/index/provenance.html?giturl=" + repo.text();
+            window.location.href="/provenance.html?giturl=" + repo.text();
         })
     },
     initProvenance: function () {
-
         var url_string = window.location.href;
         var url = new URL(url_string);
         var repo = url.searchParams.get("giturl");
         $.ajax({
-            url: "http://localhost:8080/wado/repositories/provenance?repo=" + repo,
+            url: "https://wado-project.herokuapp.com/repositories/provenance?repo=" + repo,
             type: 'GET',
             contentType: 'application/html',
             success: function(res) {
