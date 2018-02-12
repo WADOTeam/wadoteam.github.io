@@ -47,10 +47,12 @@
     }
   }
 
+  var dataSet = []
+
   $('#repositories').on('click', 'a.import_one_repo', function (e) {
     e.preventDefault()
 
-    var id = $(this).closest('tr').id
+    var id = $(this).closest('tr').get(0).id
 
     $.ajax({
       data: JSON.stringify({
@@ -72,9 +74,7 @@
 
     github.api('/user/repos')
       .then(function (r) {
-        var dataSet = []
         $.each(r.data, function (key, item) {
-          console.log(item)
           dataSet.push({
             full_name: item.full_name,
             language: item.language,
