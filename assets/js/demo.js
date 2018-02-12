@@ -265,7 +265,6 @@ demo = {
             cache: false,
             success: function (data) {
                 for (var i in data) {
-                    debugger;
                     var dataValues = data[i][0];
                     $("#suggestion-table").append(headerTemplate.replace("!a", i));
                     $("#suggestion-table").append(
