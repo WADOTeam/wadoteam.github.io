@@ -20,7 +20,7 @@
 
 <body>
 <div class="wrapper">
-    <div class="sidebar" data-color="green" data-image="../assets/img/sidebar-1.jpg">
+    <div class="sidebar" data-color="green" >
         <div class="logo">
             <a href="//www.creative-tim.com" class="simple-text">
                 WADO </a>
@@ -71,16 +71,9 @@
                                         </a>
                                     </div>
                                 </div>
-                                <table class="table">
-                                    <thead class="text-success">
-                                    <th>Project</th>
-                                    <th>Description</th>
-                                    <th style="text-align: end;">Go To</th>
-                                    </thead>
-                                    <tbody id="projects">
 
-                                    </tbody>
-                                </table>
+                                <table id="projects" class="table table-striped table-no-bordered table-hover"
+                                       width="100%"></table>
                             </div>
                         </div>
                     </div>
@@ -104,6 +97,7 @@
 <script src="assets/js/bootstrap-notify.js"></script>
 <script src="assets/js/material-dashboard.js?v=1.2.0"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="assets/js/demo.js"></script>
 
 <script type="text/javascript">
