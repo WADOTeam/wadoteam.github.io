@@ -101,7 +101,14 @@
             {
               data: null,
               className: 'center',
-              defaultContent: '<a href="#" class="import_one_repo btn btn-primary btn-simple">Import</a>'
+              render: function (data, type, row, meta) {
+                if (type === 'display') {
+                  data = data + '<a href="#" class="import_one_repo btn btn-primary btn-simple">Import</a>'
+                    + '<a href="recomandation.html?id=' + row.id + '" class="btn btn-primary btn-simple">Recommendations</a>'
+                }
+
+                return data
+              }
             }
           ]
         })
