@@ -47,10 +47,44 @@
     }
   }
 
+  var dataSet = []
+
   $('#repositories').on('click', 'a.import_one_repo', function (e) {
     e.preventDefault()
 
-    console.log($(this).closest('tr'))
+    var id = $(this).closest('tr').get(0).id
+
+    var repo
+
+    $.each(dataSet, function (index, item) {
+      if (item.id == id) {
+        repo = item
+      }
+    })
+
+    if (!repo) {
+      return
+    }
+
+    $.ajax({
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      data: JSON.stringify({
+        title: repo.full_name,
+        description: repo.description,
+        user: {
+          id: 1
+        }
+      }),
+      url: 'https://wado-project.herokuapp.com/projects',
+      dataType: 'json',
+      type: 'POST'
+    })
+      .done(function (data) {
+        console.log(data)
+      })
   })
 
   window.userRepos = function () {
@@ -58,12 +92,11 @@
 
     github.api('/user/repos')
       .then(function (r) {
-        var dataSet = []
         $.each(r.data, function (key, item) {
-          console.log(item)
           dataSet.push({
             full_name: item.full_name,
             language: item.language,
+            description: item.description,
             id: item.id
           })
         })

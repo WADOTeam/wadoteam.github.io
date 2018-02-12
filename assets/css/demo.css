@@ -87,3 +87,9 @@ ul li{
     list-style-type: none;
     padding: 0px !important;
 }
+
+.table-h {
+    color: #f44336;
+    padding: 6px 0px 6px 0px;
+    font-weight: bold;
+}
