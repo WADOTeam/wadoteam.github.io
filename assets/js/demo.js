@@ -68,7 +68,12 @@ demo = {
           {
             data: null,
             className: 'center',
-            defaultContent: '<a href="#" class="edit_project btn btn-primary btn-simple">Edit</a>'
+            render: function (data, type, row, meta) {
+              if (type === 'display') {
+                data = data + '<a href="#" class="edit_project btn btn-primary btn-simple">Edit</a>'
+                  + '<a href="recomandation.html?id=' + row.id + '" class="btn btn-primary btn-simple">Recommendations</a>'
+              }
+            }
           }
         ]
       })
@@ -172,35 +177,36 @@ demo = {
 
   initRecomandationPage: function () {
 
-        var template = "<tr>\n" +
-            "<td>!name</td>\n" +
-            "<td>!desc</td>\n" +
-            "<td>!license</td>\n" +
-            "<td>!list</td>\n" +
-            "<td>!arr</td>\n" +
-            "</tr>";
-        var headerTemplate = "<td colspan=\"5\" class=\"text-center table-h\"> !a</td>\n"
+    var template = '<tr>\n' +
+      '<td>!name</td>\n' +
+      '<td>!desc</td>\n' +
+      '<td>!license</td>\n' +
+      '<td>!list</td>\n' +
+      '<td>!arr</td>\n' +
+      '</tr>'
+    var headerTemplate = '<td colspan="5" class="text-center table-h"> !a</td>\n'
 
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/wado/fgf/recomandation",
-            cache: false,
-            success: function (data) {
-                for (var i in data) {debugger;
-                    var dataValues = data[i][0];
-                    $("#suggestion-table").append(headerTemplate.replace("!a", i));
-                    $("#suggestion-table").append(
-                        template.replace("!name", dataValues[0])
-                            .replace("!desc", dataValues[1])
-                            .replace("!license", dataValues[2])
-                            .replace("!list", getListOfRepo(dataValues[3]))
-                            .replace("!arr", getListOfArrows(dataValues[3])));
-                }
-            },
-            error: function (error) {
-                alert("Internal error");
-            }
-        });
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:8080/wado/fgf/recomandation',
+      cache: false,
+      success: function (data) {
+        for (var i in data) {
+          debugger
+          var dataValues = data[i][0]
+          $('#suggestion-table').append(headerTemplate.replace('!a', i))
+          $('#suggestion-table').append(
+            template.replace('!name', dataValues[0])
+              .replace('!desc', dataValues[1])
+              .replace('!license', dataValues[2])
+              .replace('!list', getListOfRepo(dataValues[3]))
+              .replace('!arr', getListOfArrows(dataValues[3])))
+        }
+      },
+      error: function (error) {
+        alert('Internal error')
+      }
+    })
 
     $('#suggestion-table .text-danger').click(function (target) {
       var repo = $('#suggestion-table tr td:nth-child(2)')
