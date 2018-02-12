@@ -64,9 +64,82 @@ demo = {
     },
 
     initUserPage: function () {
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
 
-        $("#languagesList").select2();
-        $("#frameworksList").select2();
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+
+        var userId = getUrlParameter('userId');
+        if (userId) {
+            var dataFromApi = {
+                compiler: "Afghanistan",
+                database: "Åland Islands",
+                description: "description",
+                ide: "Åland Islands",
+                languages: ["Andorra", "Albania"],
+                name: "project name",
+                operatingSystem: "Albania",
+                plugin: "Albania",
+                server: "Afghanistan",
+                frameworks: ["Albania"]
+            }
+
+            setTimeout(function(){ 
+                $("input[name='name']").val(dataFromApi.name);
+                $("input[name='description']").val(dataFromApi.name);
+                $("#languagesList").select2("val", dataFromApi.languages);
+                $("#frameworksList").select2("val", dataFromApi.frameworks);
+                $("#operatingSystemsList").select2("val", dataFromApi.operatingSystem);
+                $("#serversList").select2("val", dataFromApi.server);
+                $("#compilersList").select2("val", dataFromApi.compiler);
+                $("#databasesList").select2("val", dataFromApi.database);
+                $("#idesList").select2("val", dataFromApi.ide);
+                $("#pluginsList").select2("val", dataFromApi.plugins);
+                
+            }, 5000);
+        }
+
+        $.ajax({
+            url: "https://restcountries.eu/rest/v2/all"
+        }).then(function (response) {
+            $("#languagesList").select2({
+                allowClear: true,
+                placeholder: "Select languages",
+                data: $.map(response, function (item) {
+                    return {
+                        text: item.name,
+                        id: item.name
+                    }
+                })
+            });
+
+            
+        });
+
+        $.ajax({
+            url: "https://restcountries.eu/rest/v2/all"
+        }).then(function (response) {
+            $("#frameworksList").select2({
+                allowClear: true,
+                placeholder: "Select frameworks",
+                data: $.map(response, function (item) {
+                    return {
+                        text: item.name,
+                        id: item.name
+                    }
+                })
+            });
+        });
 
         $.ajax({
             url: "https://restcountries.eu/rest/v2/all"
@@ -83,31 +156,80 @@ demo = {
             });
         });
 
-        $("#serversList").select2({
-            allowClear: true,
-            placeholder: "Select a server"
-        });
-        $("#compilersList").select2({
-            allowClear: true,
-            placeholder: "Select a compiler"
-        });
-        $("#databasesList").select2({
-            allowClear: true,
-            placeholder: "Select a database"
-        });
-        $("#idesList").select2({
-            allowClear: true,
-            placeholder: "Select an ide"
-        });
-        $("#pluginsList").select2({
-            allowClear: true,
-            placeholder: "Select a plugin"
+        $.ajax({
+            url: "https://restcountries.eu/rest/v2/all"
+        }).then(function (response) {
+            $("#serversList").select2({
+                allowClear: true,
+                placeholder: "Select a server",
+                data: $.map(response, function (item) {
+                    return {
+                        text: item.name,
+                        id: item.name
+                    }
+                })
+            });
         });
 
-        // var dataFromApi = {plugins: "sdf"};
-        // for (var i in dataFromApi) {
-        //     $("input[name=" + i + "]").val(dataFromApi[i]);
-        // }
+        $.ajax({
+            url: "https://restcountries.eu/rest/v2/all"
+        }).then(function (response) {
+            $("#compilersList").select2({
+                allowClear: true,
+                placeholder: "Select a compiler",
+                data: $.map(response, function (item) {
+                    return {
+                        text: item.name,
+                        id: item.name
+                    }
+                })
+            });
+        });
+
+        $.ajax({
+            url: "https://restcountries.eu/rest/v2/all"
+        }).then(function (response) {
+            $("#databasesList").select2({
+                allowClear: true,
+                placeholder: "Select a database",
+                data: $.map(response, function (item) {
+                    return {
+                        text: item.name,
+                        id: item.name
+                    }
+                })
+            });
+        });
+
+        $.ajax({
+            url: "https://restcountries.eu/rest/v2/all"
+        }).then(function (response) {
+            $("#idesList").select2({
+                allowClear: true,
+                placeholder: "Select an IDE",
+                data: $.map(response, function (item) {
+                    return {
+                        text: item.name,
+                        id: item.name
+                    }
+                })
+            });
+        });
+
+        $.ajax({
+            url: "https://restcountries.eu/rest/v2/all"
+        }).then(function (response) {
+            $("#pluginsList").select2({
+                allowClear: true,
+                placeholder: "Select a plugin",
+                data: $.map(response, function (item) {
+                    return {
+                        text: item.name,
+                        id: item.name
+                    }
+                })
+            });
+        });
 
         $("#user-data-submit").click(function () {
             var userInfo = {};
