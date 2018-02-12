@@ -59,13 +59,13 @@
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      data: {
-        title: '',
-        description: '',
+      data: JSON.stringify({
+        title: 'Symfony',
+        description: 'Best PHP framework',
         user: {
           id: 1
         }
-      },
+      }),
       url: 'https://wado-project.herokuapp.com/projects',
       dataType: 'json',
       type: 'POST'
