@@ -55,11 +55,17 @@
     var id = $(this).closest('tr').get(0).id
 
     $.ajax({
-      data: JSON.stringify({
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      data: {
         title: '',
         description: '',
-        user: 1
-      }),
+        user: {
+          id: 1
+        }
+      },
       url: 'https://wado-project.herokuapp.com/projects',
       dataType: 'json',
       type: 'POST'
