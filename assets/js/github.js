@@ -72,8 +72,8 @@
         'Content-Type': 'application/json'
       },
       data: JSON.stringify({
-        title: 'Symfony',
-        description: 'Best PHP framework',
+        title: repo.full_name,
+        description: repo.description,
         user: {
           id: 1
         }
@@ -96,6 +96,7 @@
           dataSet.push({
             full_name: item.full_name,
             language: item.language,
+            description: item.description,
             id: item.id
           })
         })
