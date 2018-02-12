@@ -52,9 +52,10 @@
 
     var id = $(this).closest('tr').id;
 
-    $.post('https://wado-project.herokuapp.com/users/1/projects', {
+    $.post('https://wado-project.herokuapp.com/projects', {
       title: '',
-      description: ''
+      description: '',
+      user: 1
     })
       .done(function (data) {
         console.log(data)
