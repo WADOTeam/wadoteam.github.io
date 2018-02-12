@@ -78,145 +78,144 @@ demo = {
   initUserPage: function () {
 
     $.ajax({
-        url: "https://wado-project.herokuapp.com/languages"
+      url: 'https://wado-project.herokuapp.com/languages'
     }).then(function (response) {
-        $("#languagesList").select2({
-            allowClear: true,
-            placeholder: "Select languages",
-            data: $.map(response, function (item) {
-                return {
-                    text: item.language,
-                    id: item.language
-                }
-            })
-        });
-    });
-
-    $("#frameworksList").select2({
+      $('#languagesList').select2({
         allowClear: true,
-        placeholder: "Select frameworks",
-    });
+        placeholder: 'Select languages',
+        data: $.map(response, function (item) {
+          return {
+            text: item.language,
+            id: item.language
+          }
+        })
+      })
+    })
 
-    $("#operatingSystemsList").select2({
-        allowClear: true,
-        placeholder: "Select an operating system",
+    $('#frameworksList').select2({
+      allowClear: true,
+      placeholder: 'Select frameworks',
+    })
 
-    });
+    $('#operatingSystemsList').select2({
+      allowClear: true,
+      placeholder: 'Select an operating system',
 
-    $("#serversList").select2({
-        allowClear: true,
-        placeholder: "Select a server",
+    })
 
-    });
+    $('#serversList').select2({
+      allowClear: true,
+      placeholder: 'Select a server',
 
-    $("#compilersList").select2({
-        allowClear: true,
-        placeholder: "Select a compiler",
-    });
+    })
 
-    $("#databasesList").select2({
-        allowClear: true,
-        placeholder: "Select a database",
-    });
+    $('#compilersList').select2({
+      allowClear: true,
+      placeholder: 'Select a compiler',
+    })
 
-    $("#idesList").select2({
-        allowClear: true,
-        placeholder: "Select an IDE",
-    });
+    $('#databasesList').select2({
+      allowClear: true,
+      placeholder: 'Select a database',
+    })
 
-    $("#pluginsList").select2({
-        allowClear: true,
-        placeholder: "Select a plugin",
-    });
+    $('#idesList').select2({
+      allowClear: true,
+      placeholder: 'Select an IDE',
+    })
 
-    $("#user-data-submit").click(function () {
-        var userInfo = {};
-        var inputs = $("#user-data input");
-        for (var i = 0; i < inputs.length; i++) {
-            if ($(inputs[i]).attr("name") != undefined && $(inputs[i]).val().length > 1) {
-                userInfo[$(inputs[i]).attr("name")] = $(inputs[i]).val();
-            }
+    $('#pluginsList').select2({
+      allowClear: true,
+      placeholder: 'Select a plugin',
+    })
 
-        }
-        var inputs = $("#user-data select");
-        for (var i = 0; i < inputs.length; i++) {
-            if ($(inputs[i]).attr("name") != undefined && $(inputs[i]).val().length > 1) {
-                userInfo[$(inputs[i]).attr("name")] = $(inputs[i]).val();
-            }
-
+    $('#user-data-submit').click(function () {
+      var userInfo = {}
+      var inputs = $('#user-data input')
+      for (var i = 0; i < inputs.length; i++) {
+        if ($(inputs[i]).attr('name') != undefined && $(inputs[i]).val().length > 1) {
+          userInfo[$(inputs[i]).attr('name')] = $(inputs[i]).val()
         }
 
-        $.ajax({
+      }
+      var inputs = $('#user-data select')
+      for (var i = 0; i < inputs.length; i++) {
+        if ($(inputs[i]).attr('name') != undefined && $(inputs[i]).val().length > 1) {
+          userInfo[$(inputs[i]).attr('name')] = $(inputs[i]).val()
+        }
+
+      }
+
+      $.ajax({
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        data: JSON.stringify({
+          title: userInfo.name,
+          description: userInfo.description,
+          user: {
+            id: 1
+          }
+        }),
+        url: 'https://wado-project.herokuapp.com/projects',
+        dataType: 'json',
+        type: 'POST'
+      })
+        .done(function (data) {
+
+          console.log(data)
+          let projId = data.id
+
+          for (let i in userInfo) {
+            if (i == 'name' || i == 'description') continue
+
+            if (Array.isArray(userInfo[i])) {
+              for (let j in userInfo[i]) {
+                $.ajax({
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  data: JSON.stringify({
+                    project: {
+                      id: projId
+                    },
+                    characteristicType: i,
+                    characteristicValue: userInfo[i][j]
+                  }),
+                  url: 'https://wado-project.herokuapp.com/characteristics',
+                  dataType: 'json',
+                  type: 'POST'
+                }).done(function (data) {
+                  console.log(data)
+                })
+              }
+            }
+          }
+
+          $.ajax({
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
             },
             data: JSON.stringify({
-              title: userInfo.name,
-              description: userInfo.description,
-              user: {
-                id: 1
-              }
+              project: {
+                id: projId
+              },
+              characteristicType: i,
+              characteristicValue: userInfo[i]
             }),
-            url: 'https://wado-project.herokuapp.com/projects',
+            url: 'https://wado-project.herokuapp.com/characteristics',
             dataType: 'json',
             type: 'POST'
+          }).done(function (data) {
+            console.log(data)
+            window.location = '/dashboard.html'
+          })
         })
-        .done(function (data) {
-
-            console.log(data);
-            let projId = data.id;
-
-    
-            for (let i in userInfo) {
-                if(i=='name' || i=='description') continue;
-
-                if(Array.isArray(userInfo[i])) {
-                    for (let j in userInfo[i]) {
-                        $.ajax({
-                            headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                            },
-                            data: JSON.stringify({
-                                project: {
-                                    id: projId
-                                },
-                                characteristicType: i,
-                                characteristicValue: userInfo[i][j]
-                            }),
-                            url: 'https://wado-project.herokuapp.com/characteristics',
-                            dataType: 'json',
-                            type: 'POST'
-                        }).done(function (data) {
-                            console.log(data);
-                        });
-                    }
-                }
-            }
-
-            $.ajax({
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },
-                data: JSON.stringify({
-                    project: {
-                        id: projId
-                    },
-                    characteristicType: i,
-                    characteristicValue: userInfo[i]
-                }),
-                url: 'https://wado-project.herokuapp.com/characteristics',
-                dataType: 'json',
-                type: 'POST'
-            }).done(function (data) {
-                console.log(data);
-                window.location = '/dashboard.html'
-            });
-        });
-    });
-},
+    })
+  },
   initDashboardPage: function () {
 
     $('#' + Object.keys(tabs)[0]).parent().addClass('active')
@@ -245,41 +244,59 @@ demo = {
       }
     })
   },
+  showNotification: function (from, align, message) {
+    type = ['', 'info', 'success', 'warning', 'danger', 'rose', 'primary']
+
+    color = Math.floor((Math.random() * 6) + 1)
+
+    $.notify({
+      icon: 'notifications',
+      message: message
+
+    }, {
+      type: type[color],
+      timer: 3000,
+      placement: {
+        from: from,
+        align: align
+      }
+    })
+  },
 
   initRecomandationPage: function () {
 
-        var template = "<tr>\n" +
-            "<td>!name</td>\n" +
-            "<td>!desc</td>\n" +
-            "<td>!license</td>\n" +
-            "<td>!list</td>\n" +
-            "<td>!arr</td>\n" +
-            "</tr>";
-        var headerTemplate = "<td colspan=\"5\" class=\"text-center table-h\"> !a</td>\n"
-        var url_string = window.location.href
-        var url = new URL(url_string)
-        var id = url.searchParams.get('id')
-        $.ajax({
-            type: "GET",
-            url: "https://wado-project.herokuapp.com/" + id + "/recomandation",
-            cache: false,
-            success: function (data) {
-                for (var i in data) {
-                    debugger;
-                    var dataValues = data[i][0];
-                    $("#suggestion-table").append(headerTemplate.replace("!a", i));
-                    $("#suggestion-table").append(
-                        template.replace("!name", dataValues[0])
-                            .replace("!desc", dataValues[1])
-                            .replace("!license", dataValues[2])
-                            .replace("!list", getListOfRepo(dataValues[3]))
-                            .replace("!arr", getListOfArrows(dataValues[3])));
-                }
-            },
-            error: function (error) {
-                alert("Internal error");
-            }
-        });
+    var template = '<tr>\n' +
+      '<td>!name</td>\n' +
+      '<td>!desc</td>\n' +
+      '<td>!license</td>\n' +
+      '<td>!list</td>\n' +
+      '<td>!arr</td>\n' +
+      '</tr>'
+    var headerTemplate = '<td colspan="5" class="text-center table-h"> !a</td>\n'
+    var url_string = window.location.href
+    var url = new URL(url_string)
+    var id = url.searchParams.get('id')
+    $.ajax({
+      type: 'GET',
+      url: 'https://wado-project.herokuapp.com/' + id + '/recomandation',
+      cache: false,
+      success: function (data) {
+        for (var i in data) {
+          debugger
+          var dataValues = data[i][0]
+          $('#suggestion-table').append(headerTemplate.replace('!a', i))
+          $('#suggestion-table').append(
+            template.replace('!name', dataValues[0])
+              .replace('!desc', dataValues[1])
+              .replace('!license', dataValues[2])
+              .replace('!list', getListOfRepo(dataValues[3]))
+              .replace('!arr', getListOfArrows(dataValues[3])))
+        }
+      },
+      error: function (error) {
+        alert('Internal error')
+      }
+    })
 
     $('#suggestion-table .text-danger').click(function (target) {
       var repo = $('#suggestion-table tr td:nth-child(2)')
@@ -322,21 +339,21 @@ var setArchitecturelRecomandation = function (id) {
     '<td>!desc</td>\n' +
     '</tr>'
 
-    $.ajax({
-        type: 'GET',
-        url: 'https://wado-project.herokuapp.com/' + id + '/arhitecture_informations',
-        cache: false,
-        success: function (data) {
-            for (var i = 0; i < data.length; i++) {
-                var name = Object.keys(data[i])[0]
-                var description = data[i][name]
-                $('#suggestion-table-arhitecture').append(
-                    template.replace('!pattern', name.replace(/_/g, ' '))
-                        .replace('!desc', description).replace('@en', ''))
-            }
-        },
-        error: function (error) {
-            alert('Internal error')
-        }
-    })
+  $.ajax({
+    type: 'GET',
+    url: 'https://wado-project.herokuapp.com/' + id + '/arhitecture_informations',
+    cache: false,
+    success: function (data) {
+      for (var i = 0; i < data.length; i++) {
+        var name = Object.keys(data[i])[0]
+        var description = data[i][name]
+        $('#suggestion-table-arhitecture').append(
+          template.replace('!pattern', name.replace(/_/g, ' '))
+            .replace('!desc', description).replace('@en', ''))
+      }
+    },
+    error: function (error) {
+      alert('Internal error')
+    }
+  })
 }

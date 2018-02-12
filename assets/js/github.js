@@ -83,7 +83,7 @@
       type: 'POST'
     })
       .done(function (data) {
-        console.log(data)
+        demo.showNotification('top', 'right', 'Project successfully imported')
       })
   })
 
