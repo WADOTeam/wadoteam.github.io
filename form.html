@@ -83,7 +83,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group form-info label-floating">
                                                     <label class="control-label">Languages</label>
-                                                    <select multiple name="languages" id="languagesList" class="form-control dropdown-toggle">
+                                                    <select multiple name="language" id="languagesList" class="form-control dropdown-toggle">
                                                     </select>
                                                 </div>
                                             </div>
@@ -95,9 +95,12 @@
                                             <div class="col-md-12">
                                                 <div class="form-group form-info label-floating">
                                                     <label class="control-label">Frameworks</label>
-                                                    <select multiple name="frameworks" id="frameworksList" class="form-control dropdown-toggle">
-                                                        <option value="AL">Alabama</option>
-                                                        <option value="WY">Wyoming</option>
+                                                    <select multiple name="framework" id="frameworksList" class="form-control dropdown-toggle">
+                                                        <option></option>
+                                                        <option value="Angular">Angular</option>
+                                                        <option value="Vue">Vue</option>
+                                                        <option value="Ember">Ember</option>
+                                                        <option value="Meteor">Meteor</option>                                                                                                           
                                                     </select>
                                                 </div>
                                             </div>
@@ -106,35 +109,32 @@
                                             <span class="title-edit">System info</span>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="form-group form-info label-floating">
                                                     <label class="control-label">Operating system</label>
                                                     <select name="operatingSystem" id="operatingSystemsList" class="form-control dropdown-toggle">
                                                         <option></option>
+                                                        <option value="Windows">Windows</option>
+                                                        <option value="Android">Android</option>
+                                                        <option value="MacOS">MacOS</option>
+                                                        <option value="Ubuntu">Ubuntu</option>
+                                                        <option value="CentOS">CentOS</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="form-group form-info label-floating">
                                                     <label class="control-label">Server</label>
                                                     <select name="server" id="serversList" class="form-control dropdown-toggle">
                                                         <option></option>
-                                                        <option value="AL">Alabama</option>
-                                                        <option value="WY">Wyoming</option>
+                                                        <option value="Apache HTTP Server">Apache HTTP Server</option>
+                                                        <option value="NGINX">NGINX</option>
+                                                        <option value="Apache Tomcat">Apache Tomcat</option>
+                                                        <option value="Node.js">Node.js</option>
+                                                        <option value="Lighttpd">Lighttpd</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group form-info label-floating">
-                                                    <label class="control-label">Compiler</label>
-                                                    <select name="compiler" id="compilersList" class="form-control dropdown-toggle">
-                                                        <option></option>
-                                                        <option value="AL">Alabama</option>
-                                                        <option value="WY">Wyoming</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
                                         </div>
                                         <div class="row title-row">
                                             <span class="title-edit">Database</span>
@@ -145,8 +145,10 @@
                                                     <label class="control-label">Database</label>
                                                     <select name="database" id="databasesList" class="form-control dropdown-toggle">
                                                         <option></option>
-                                                        <option value="AL">Alabama</option>
-                                                        <option value="WY">Wyoming</option>
+                                                        <option value="MySQL">MySQL</option>
+                                                        <option value="SQLServer">SQLServer</option>
+                                                        <option value="Oracle">Oracle</option>
+                                                        <option value="PosgreSQL">PosgreSQL</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -155,23 +157,17 @@
                                             <span class="title-edit">IDE</span>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group form-info label-floating">
                                                     <label class="control-label">IDE</label>
                                                     <select name="ide" id="idesList" class="form-control dropdown-toggle">
                                                         <option></option>
-                                                        <option value="AL">Alabama</option>
-                                                        <option value="WY">Wyoming</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group form-info label-floating">
-                                                    <label class="control-label">Plugins</label>
-                                                    <select name="plugin" id="pluginsList" class="form-control dropdown-toggle">
-                                                        <option></option>
-                                                        <option value="AL">Alabama</option>
-                                                        <option value="WY">Wyoming</option>
+                                                        <option value="Eclipse">Eclipse</option>
+                                                        <option value="VisualStudio">VisualStudio</option>
+                                                        <option value="VisualStudioCode">VisualStudioCode</option>
+                                                        <option value="InteliJ">InteliJ</option>
+                                                        <option value="PyCharm">PyCharm</option>
+                                                        
                                                     </select>
                                                 </div>
                                             </div>
@@ -182,20 +178,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="col-md-4">-->
-                        <!--<div class="card card-profile">-->
-                        <!--<div class="card-avatar">-->
-                        <!--<a href="#pablo">-->
-                        <!--<img class="img" src="../assets/img/faces/icon.png" />-->
-                        <!--</a>-->
-                        <!--</div>-->
-                        <!--<div class="content">-->
-                        <!--<p class="card-content">-->
-                        <!--The information you gave will help us to give more info about what is new in your development interests.-->
-                        <!--</p>-->
-                        <!--</div>-->
-                        <!--</div>-->
-                        <!--</div>-->
                     </div>
                 </div>
             </div>

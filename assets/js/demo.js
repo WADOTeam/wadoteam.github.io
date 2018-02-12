@@ -64,171 +64,57 @@ demo = {
     },
 
     initUserPage: function () {
-        var getUrlParameter = function getUrlParameter(sParam) {
-            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-                sURLVariables = sPageURL.split('&'),
-                sParameterName,
-                i;
-
-            for (i = 0; i < sURLVariables.length; i++) {
-                sParameterName = sURLVariables[i].split('=');
-
-                if (sParameterName[0] === sParam) {
-                    return sParameterName[1] === undefined ? true : sParameterName[1];
-                }
-            }
-        };
-
-        var userId = getUrlParameter('userId');
-        if (userId) {
-            var dataFromApi = {
-                compiler: "Afghanistan",
-                database: "Åland Islands",
-                description: "description",
-                ide: "Åland Islands",
-                languages: ["Andorra", "Albania"],
-                name: "project name",
-                operatingSystem: "Albania",
-                plugin: "Albania",
-                server: "Afghanistan",
-                frameworks: ["Albania"]
-            }
-
-            setTimeout(function(){ 
-                $("input[name='name']").val(dataFromApi.name);
-                $("input[name='description']").val(dataFromApi.name);
-                $("#languagesList").select2("val", dataFromApi.languages);
-                $("#frameworksList").select2("val", dataFromApi.frameworks);
-                $("#operatingSystemsList").select2("val", dataFromApi.operatingSystem);
-                $("#serversList").select2("val", dataFromApi.server);
-                $("#compilersList").select2("val", dataFromApi.compiler);
-                $("#databasesList").select2("val", dataFromApi.database);
-                $("#idesList").select2("val", dataFromApi.ide);
-                $("#pluginsList").select2("val", dataFromApi.plugins);
-                
-            }, 5000);
-        }
 
         $.ajax({
-            url: "https://restcountries.eu/rest/v2/all"
+            url: "https://wado-project.herokuapp.com/languages"
         }).then(function (response) {
             $("#languagesList").select2({
                 allowClear: true,
                 placeholder: "Select languages",
                 data: $.map(response, function (item) {
                     return {
-                        text: item.name,
-                        id: item.name
-                    }
-                })
-            });
-
-            
-        });
-
-        $.ajax({
-            url: "https://restcountries.eu/rest/v2/all"
-        }).then(function (response) {
-            $("#frameworksList").select2({
-                allowClear: true,
-                placeholder: "Select frameworks",
-                data: $.map(response, function (item) {
-                    return {
-                        text: item.name,
-                        id: item.name
+                        text: item.language,
+                        id: item.language
                     }
                 })
             });
         });
 
-        $.ajax({
-            url: "https://restcountries.eu/rest/v2/all"
-        }).then(function (response) {
-            $("#operatingSystemsList").select2({
-                allowClear: true,
-                placeholder: "Select an operating system",
-                data: $.map(response, function (item) {
-                    return {
-                        text: item.name,
-                        id: item.name
-                    }
-                })
-            });
+        $("#frameworksList").select2({
+            allowClear: true,
+            placeholder: "Select frameworks",
         });
 
-        $.ajax({
-            url: "https://restcountries.eu/rest/v2/all"
-        }).then(function (response) {
-            $("#serversList").select2({
-                allowClear: true,
-                placeholder: "Select a server",
-                data: $.map(response, function (item) {
-                    return {
-                        text: item.name,
-                        id: item.name
-                    }
-                })
-            });
+        $("#operatingSystemsList").select2({
+            allowClear: true,
+            placeholder: "Select an operating system",
+
         });
 
-        $.ajax({
-            url: "https://restcountries.eu/rest/v2/all"
-        }).then(function (response) {
-            $("#compilersList").select2({
-                allowClear: true,
-                placeholder: "Select a compiler",
-                data: $.map(response, function (item) {
-                    return {
-                        text: item.name,
-                        id: item.name
-                    }
-                })
-            });
+        $("#serversList").select2({
+            allowClear: true,
+            placeholder: "Select a server",
+
         });
 
-        $.ajax({
-            url: "https://restcountries.eu/rest/v2/all"
-        }).then(function (response) {
-            $("#databasesList").select2({
-                allowClear: true,
-                placeholder: "Select a database",
-                data: $.map(response, function (item) {
-                    return {
-                        text: item.name,
-                        id: item.name
-                    }
-                })
-            });
+        $("#compilersList").select2({
+            allowClear: true,
+            placeholder: "Select a compiler",
         });
 
-        $.ajax({
-            url: "https://restcountries.eu/rest/v2/all"
-        }).then(function (response) {
-            $("#idesList").select2({
-                allowClear: true,
-                placeholder: "Select an IDE",
-                data: $.map(response, function (item) {
-                    return {
-                        text: item.name,
-                        id: item.name
-                    }
-                })
-            });
+        $("#databasesList").select2({
+            allowClear: true,
+            placeholder: "Select a database",
         });
 
-        $.ajax({
-            url: "https://restcountries.eu/rest/v2/all"
-        }).then(function (response) {
-            $("#pluginsList").select2({
-                allowClear: true,
-                placeholder: "Select a plugin",
-                data: $.map(response, function (item) {
-                    return {
-                        text: item.name,
-                        id: item.name
-                    }
-                })
-            });
+        $("#idesList").select2({
+            allowClear: true,
+            placeholder: "Select an IDE",
+        });
+
+        $("#pluginsList").select2({
+            allowClear: true,
+            placeholder: "Select a plugin",
         });
 
         $("#user-data-submit").click(function () {
@@ -247,9 +133,76 @@ demo = {
                 }
 
             }
-            console.log(userInfo);
-        }
-        );
+
+            $.ajax({
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                data: JSON.stringify({
+                  title: userInfo.name,
+                  description: userInfo.description,
+                  user: {
+                    id: 1
+                  }
+                }),
+                url: 'https://wado-project.herokuapp.com/projects',
+                dataType: 'json',
+                type: 'POST'
+            })
+            .done(function (data) {
+
+                console.log(data);
+                let projId = data.id;
+
+        
+                for (let i in userInfo) {
+                    if(i=='name' || i=='description') continue;
+
+                    if(Array.isArray(userInfo[i])) {
+                        for (let j in userInfo[i]) {
+                            $.ajax({
+                                headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                                },
+                                data: JSON.stringify({
+                                    project: {
+                                        id: projId
+                                    },
+                                    characteristicType: i,
+                                    characteristicValue: userInfo[i][j]
+                                }),
+                                url: 'https://wado-project.herokuapp.com/characteristics',
+                                dataType: 'json',
+                                type: 'POST'
+                            }).done(function (data) {
+                                console.log(data);
+                            });
+                        }
+                    }
+                }
+
+                $.ajax({
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                    data: JSON.stringify({
+                        project: {
+                            id: projId
+                        },
+                        characteristicType: i,
+                        characteristicValue: userInfo[i]
+                    }),
+                    url: 'https://wado-project.herokuapp.com/characteristics',
+                    dataType: 'json',
+                    type: 'POST'
+                }).done(function (data) {
+                    console.log(data);
+                });
+            });
+        });
     },
     initDashboardPage: function () {
 
@@ -257,7 +210,7 @@ demo = {
 
         $("#suggestion-table .text-danger").click(function (target) {
             var repo = $("#suggestion-table tr td:nth-child(2)");
-            window.location.href="/provenance.html?giturl=" + repo.text();
+            window.location.href = "/provenance.html?giturl=" + repo.text();
         })
     },
     initProvenance: function () {
@@ -345,7 +298,7 @@ var getListOfArrows = function (data) {
 
 };
 
-var setArchitecturelRecomandation = function(){
+var setArchitecturelRecomandation = function () {
     var template = "<tr>\n" +
         "<td>!pattern</td>\n" +
         "<td>!desc</td>\n" +
