@@ -50,7 +50,15 @@
   $('#repositories').on('click', 'a.import_one_repo', function (e) {
     e.preventDefault()
 
-    console.log($(this).closest('tr'))
+    var id = $(this).closest('tr').id;
+
+    $.post('https://wado-project.herokuapp.com/users/1/projects', {
+      title: '',
+      description: ''
+    })
+      .done(function (data) {
+        console.log(data)
+      })
   })
 
   window.userRepos = function () {
