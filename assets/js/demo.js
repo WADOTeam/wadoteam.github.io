@@ -167,19 +167,22 @@ demo = {
             "<td>!list</td>\n" +
             "<td>!arr</td>\n" +
             "</tr>";
+        var headerTemplate = "<td colspan=\"5\" class=\"text-center table-h\"> !a</td>\n"
 
         $.ajax({
             type: "GET",
             url: "http://localhost:8080/wado/fgf/recomandation",
             cache: false,
             success: function (data) {
-                for (var i = 0; i < data.length; i++) {
+                for (var i in data) {debugger;
+                    var dataValues = data[i][0];
+                    $("#suggestion-table").append(headerTemplate.replace("!a", i));
                     $("#suggestion-table").append(
-                        template.replace("!name", data[i][0])
-                            .replace("!desc", data[i][1])
-                            .replace("!license", data[i][2])
-                            .replace("!list", getListOfRepo(data[i][3]))
-                            .replace("!arr", getListOfArrows(data[i][3])));
+                        template.replace("!name", dataValues[0])
+                            .replace("!desc", dataValues[1])
+                            .replace("!license", dataValues[2])
+                            .replace("!list", getListOfRepo(dataValues[3]))
+                            .replace("!arr", getListOfArrows(dataValues[3])));
                 }
             },
             error: function (error) {
