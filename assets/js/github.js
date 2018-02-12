@@ -54,6 +54,18 @@
 
     var id = $(this).closest('tr').get(0).id
 
+    var repo
+
+    $.each(dataSet, function (index, item) {
+      if (item.id == id) {
+        repo = item
+      }
+    })
+
+    if (!repo) {
+      return
+    }
+
     $.ajax({
       headers: {
         'Accept': 'application/json',
