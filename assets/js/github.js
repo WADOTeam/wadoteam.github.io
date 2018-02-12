@@ -84,6 +84,7 @@
     })
       .done(function (data) {
         demo.showNotification('top', 'right', 'Project successfully imported')
+        $(e.target).text('Imported')
       })
   })
 
