@@ -52,12 +52,16 @@
 
     var id = $(this).closest('tr').id
 
-    $.post('https://wado-project.herokuapp.com/projects', {
-      title: '',
-      description: '',
-      user: 1
-    }, function () {
-    }, 'json')
+    $.ajax({
+      data: JSON.stringify({
+        title: '',
+        description: '',
+        user: 1
+      }),
+      url: 'https://wado-project.herokuapp.com/projects',
+      dataType: 'json',
+      type: 'POST'
+    })
       .done(function (data) {
         console.log(data)
       })
